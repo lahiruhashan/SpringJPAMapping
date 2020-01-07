@@ -1,6 +1,9 @@
 package com.hashan.mapping.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -9,6 +12,17 @@ public class Book {
     private Long bookId;
     private String bookName;
     private String author;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    @JsonManagedReference
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Long getBookId() {
         return bookId;
